@@ -1,1 +1,978 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Mindanao Travel Guide – Discover the best travel spots in Bukidnon, Zamboanga del Norte, and Lanao del Norte.">
+  <meta name="keywords" content="Mindanao travel, Bukidnon, Zamboanga del Norte, Lanao del Norte, Philippines tourism">
+  <meta name="author" content="Mindanao Travel Guide Team">
+
+  <!-- Title -->
+  <title>Mindanao Travel Guide</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Logo.png">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<style>
+  :root{
+    --accent: #1A2332;
+    --muted: #6c757d;
+  }
+
+  body { 
+    font-family: "Segoe UI", Roboto, Arial, sans-serif; 
+    background:#fafafa; 
+    color:#222;
+    padding-bottom:130px; /* space for fixed footer */
+  }
+
+  .province-card, .spot-card { 
+    cursor:pointer; 
+    transition:transform .12s, box-shadow .12s; 
+  }
+  .province-card:hover, .spot-card:hover { 
+    transform: translateY(-4px); 
+    box-shadow: 0 6px 22px rgba(0,0,0,.08); 
+  }
+
+/* Province cards responsive */
+.province-card {
+  flex: 1 1 250px;  /* base width 250px, can grow or shrink */
+  max-width: 300px; /* max width on large screens */
+  min-width: 180px; /* minimum width on small screens */
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+
+  .large-image { 
+    min-height:320px; 
+    background-size:cover; 
+    background-position:center; 
+    border-radius:6px; 
+  }
+
+  .thumb { 
+    height:70px; 
+    width:100px; 
+    object-fit:cover; 
+    border-radius:4px; 
+    cursor:pointer; 
+  }
+
+  .province-banner { 
+    height:160px; 
+    background-size:cover; 
+    background-position:center; 
+    border-radius:8px; 
+    display:flex; 
+    align-items:end; 
+    color:white; 
+    padding:12px; 
+  }
+
+  /* NAVIGATION (TOP RIGHT) */
+  nav {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 1050; 
+    pointer-events: auto;
+  }
+
+  nav a {
+    cursor: pointer;
+    margin-left: 15px;
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+  }
+
+  nav a:hover { text-decoration: underline; }
+
+  /* HEADER LOGO */
+  #headerLogo {
+    width: 40px;   /* smaller width */
+    height: 40px;  /* smaller height */
+    object-fit: contain; 
+  }
+
+  /* Align header text vertically with logo */
+  header.d-flex.align-items-center h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+/* FIXED FOOTER */
+#footerBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1A2332;
+  color: white;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  border-top: 1px solid #444;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center; /* center content horizontally */
+  align-items: center;     /* center content vertically */
+  text-align: center;      /* center text */
+}
+
+#footerContent {
+  display: flex;
+  flex-direction: column; /* stack logo and text vertically */
+  align-items: center;    /* center everything */
+  gap: 10px;              /* spacing between logo and text */
+  width: 100%;
+  max-width: 900px;       /* optional max width */
+}
+
+#footerLogoBox img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+#footerLogoBox img:hover {
+  transform: scale(1.1);
+}
+
+#footerText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* center text */
+  line-height: 1.4;
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+
+/* Fade in and slide up animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+  #footerContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  #footerLogoBox img {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+
+
+  @media (min-width: 768px) {
+  #headerLogo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+header.d-flex.align-items-center h3 {
+  margin: 0; /* remove default margin */
+  font-size: 1.5rem; /* adjust if needed */
+}}
+
+/* TOP LEFT LOGO + TEXT */
+#topLeftHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* space between logo and text */
+}
+
+#topLeftHeader img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+#topLeftHeader h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1A2332;
+}
+
+
+/* HOME BACKGROUND */
+#homeView {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 130px); /* full viewport minus footer */
+  background: url('Home.jpeg') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+#homeView::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3); /* overlay for readability */
+  z-index: -1;
+}
+
+.homeContent {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 120px; /* spacing from top */
+}
+
+
+
+.homeContent h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.homeContent p, .homeContent h2 {
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+}
+
+#provinceView {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+#spotHeader {
+  text-align: center;
+  color: white;
+  text-shadow: 3px 3px 8px black;
+  margin-bottom: 30px;
+}
+
+#spotHeader h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+#spotHeader p {
+  font-size: 1.3rem;
+}
+
+#homeProvinces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+#detailView {
+  background-color: #f5f5f0; /* beige */
+  padding: 20px;
+}
+
+/* Oval shape for first text */
+.about-oval-text {
+  display: inline-block;
+  background-color: #f0c674; /* pick a color you like */
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #1A2332;
+}
+
+/* Main text bigger than oval */
+.about-main-text {
+  font-size: 2rem; /* bigger size */
+  font-weight: 700;
+  color: #1A2332;
+}
+
+/* Subtitle smaller than main text */
+.about-subtext {
+  font-size: 1.1rem;
+  color: #444;
+}
+
+/* Description paragraph */
+.about-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#aboutView {
+  display: none;
+  min-height: calc(100vh - 130px); /* full viewport minus footer height */
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #fef7f0; /* light beige / dirty white */
+}
+
+/* CONTACT PAGE FULL BACKGROUND */
+#contactView {
+  min-height: calc(100vh - 130px); /* full viewport minus footer */
+  background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e'); /* relevant image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* BANNER CENTERED TEXT */
+.contact-banner {
+  text-align: center;
+  color: white;
+  background: rgba(0,0,0,0.3); /* optional overlay for readability */
+  padding: 40px 20px;
+  border-radius: 12px;
+}
+
+/* WRAPPER TO CENTER FORM */
+.contact-form-wrapper {
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+  min-height: calc(100vh - 130px - 180px); /* subtract footer + banner height */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* FORM CONTAINER */
+#contactFormContainer {
+  width: 100%;
+  max-width: 500px;
+  background-color: rgba(255, 248, 235, 0.95); /* soft beige / dirty white */
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* FORM INPUTS */
+#contactFormContainer input,
+#contactFormContainer textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fffdf8;
+  resize: vertical; /* allow textarea resizing vertically */
+}
+
+/* FORM BUTTON */
+#contactFormContainer button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1A2332; /* accent color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#contactFormContainer button:hover {
+  background-color: #121923; /* slightly darker on hover */
+}
+
+/* RESPONSIVE */
+@media (max-width: 576px) {
+  #contactFormContainer {
+    padding: 20px 15px;
+  }
+}
+
+#contactView {
+  display: none;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVIGATION BAR -->
+<nav style="position:fixed; top:15px; right:20px; z-index:999;">
+  <a id="navHome">Home</a>
+  <a id="navAbout">About</a>
+  <a id="navContact">Contact</a>
+</nav>
+
+
+  <!-- HEADER -->
+ <header id="topLeftHeader" class="d-flex align-items-center mb-2">
+  <img src="Logo.png" alt="Logo" id="headerLogo">
+  <h3 class="ms-2">Mindanao Travel Guide</h3>
+</header>
+
+<button id="backFromInner" class="btn btn-dark" style="display:none; margin-bottom:15px;">Back</button>
+
+
+ <!-- HOME VIEW -->
+<main id="homeView">
+  <div class="homeContent text-center">
+    <h1 style="font-size:3rem; font-weight:bold;">Mindanao Travel Guide</h1>
+    <p style="font-size:1.2rem; color:white;">Discover the Hidden Gems of Southern Philippines</p>
+    
+<h2 class="mt-4">Select Your Province</h2>
+
+<!-- HOMEPAGE PROVINCE CARDS -->
+<div id="homeProvinces" class="d-flex flex-wrap justify-content-center gap-4 mt-3">
+  <div class="province-card p-3 shadow-sm" data-province="zamboanga-del-norte">
+    <div class="province-banner" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');">
+      <h4 class="text-white">Zamboanga del Norte</h4>
+    </div>
+    <p class="small mt-2 text-muted text-center">Beaches and Dakak Resort.</p>
+  </div>
+
+  <div class="province-card p-3 shadow-sm" data-province="bukidnon">
+    <div class="province-banner" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee');">
+      <h4 class="text-white">Bukidnon</h4>
+    </div>
+    <p class="small mt-2 text-muted text-center">Highland paradise.</p>
+  </div>
+
+  <div class="province-card p-3 shadow-sm" data-province="lanao-del-norte">
+    <div class="province-banner" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470');">
+      <h4 class="text-white">Lanao del Norte</h4>
+    </div>
+    <p class="small mt-2 text-muted text-center">Waterfalls & culture.</p>
+  </div>
+</div>
+
+
+  </div>
+</main>
+
+
+  <!-- PROVINCE VIEW -->
+ <section id="provinceView" style="display:none;">
+
+  <div id="spotHeader">
+    <h1 id="selectedProvinceName"></h1>
+    <p id="selectedProvinceTagline"></p>
+  </div>
+
+  <div class="row g-3 my-3" id="spotsRow"></div>
+</section>
+
+
+  <!-- DETAIL VIEW -->
+  <section id="detailView" style="display:none;">
+    <span class="badge bg-dark mb-2" id="detailProvinceBadge"></span>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div id="mainImage" class="large-image"></div>
+
+        <div class="d-flex gap-2 mt-2">
+          <img class="thumb" id="thumb0">
+          <img class="thumb" id="thumb1">
+          <img class="thumb" id="thumb2">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h3 id="detailTitle"></h3>
+        <p class="text-muted" id="detailDescription"></p>
+        <p><strong>Location:</strong> <span id="detailLocation"></span></p>
+        <button class="btn btn-secondary" id="backToProvince">Back</button>
+      </div>
+    </div>
+
+    <h5 class="mt-4">Other Spots in this Province</h5>
+    <div class="row g-2" id="bottomSpots"></div>
+  </section>
+
+  <!-- ABOUT PAGE -->
+ <section id="aboutView" style="display:none; padding: 20px; text-align:center;">
+
+  <!-- Top banner remains -->
+  <div class="mb-4 p-4 rounded" 
+       style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee'); 
+              background-size:cover; background-position:center; color:white;">
+    <h1>About Mindanao Travel Guide</h1>
+  </div>
+
+  <!-- New structured About content -->
+  <!-- Oval Text -->
+  <div class="about-oval-text">About Mindanao Travel</div>
+
+  <!-- Bigger text -->
+  <h2 class="about-main-text mt-3">Connecting Travelers to Mindanao's Wonders</h2>
+
+  <!-- Smaller subtitle text -->
+  <p class="about-subtext mt-2">Your trusted companion for exploring the Philippines Southern frontier</p>
+
+  <!-- Space -->
+  <div style="height: 30px;"></div>
+
+  <!-- Paragraph description -->
+  <p class="about-description">
+    This platform connects adventures, culture enthusiasts, and nature lovers with authentic experiences across 3 magnificent provinces. 
+    From the majestic peaks of Dahilayan to the pristine beaches of Zamboanga, we're committed to providing comprehensive, accurate, 
+    and inspiring travel information that helps you create unforgettable memories.
+  </p>
+
+</section>
+
+
+  <!-- CONTACT PAGE -->
+<section id="contactView">
+
+  <!-- TOP BANNER -->
+  <div class="contact-banner mb-4 p-4 rounded">
+    <h1>Contact Us</h1>
+    <p>We’d love to hear from you!</p>
+  </div>
+
+  <!-- FORM WRAPPER -->
+  <div class="contact-form-wrapper">
+    <div id="contactFormContainer">
+      <h4>Email</h4>
+      <p>mindanaotravelguide@gmail.com</p>
+
+      <h4>Message Form</h4>
+      <input type="text" id="contactName" placeholder="Your Name">
+      <input type="email" id="contactEmail" placeholder="Your Email">
+      <textarea id="contactMessage" placeholder="Your Message" rows="5"></textarea>
+      <button id="sendMessageBtn">Send</button>
+    </div>
+  </div>
+
+</section>
+
+
+
+<!-- FIXED FOOTER -->
+<footer id="footerBar">
+  <div id="footerContent">
+    <div id="footerLogoBox">
+      <img src="Logo.png" alt="Logo">
+    </div>
+    <div id="footerText">
+      <strong>Mindanao Travel Guide</strong>
+      <span>Your trusted companion for exploring the gems and cultural treasures of Mindanao, Philippines.</span>
+      <small>© 2025 Mindanao Travel Guide. All rights reserved.</small>
+    </div>
+  </div>
+</footer>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+    emailjs.init("gmi2znT2s1FS-_RWA"); // EmailJS public key
+  })();
+</script>
+
+<script>
+window.onload = function() {
+
+/* --------------------------
+   TRAVEL DATA
+---------------------------*/
+const DATA = {
+  "zamboanga-del-norte": {
+    title: "Zamboanga del Norte",
+    subtitle: "Home of Dakak and natural wonders.",
+    spots: [
+      {
+        id: "dakak",
+        title: "Dakak Beach Resort",
+        short: "Famous white sand resort.",
+        description: "A famous white-sand beach destination in Dapitan.",
+        location: "Dapitan City",
+        images: [
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+        ]
+      },
+      {
+        id: "santacruz",
+        title: "Great Santa Cruz Island",
+        short: "Pink sand beach.",
+        description: "A breathtaking island known for its pink sand and clear waters.",
+        location: "Zamboanga City",
+        images: [
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+        ]
+      },
+      {
+        id: "sungkilaw",
+        title: "Sungkilaw Falls",
+        short: "Nature waterfall.",
+        description: "A refreshing natural waterfall surrounded by greenery.",
+        location: "Dapitan City",
+        images: [
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+        ]
+      }
+    ]
+  },
+
+  "bukidnon": {
+    title: "Bukidnon",
+    subtitle: "Cool climate and mountain adventures.",
+    spots: [
+      {
+        id: "dahilayan",
+        title: "Dahilayan Adventure Park",
+        short: "Zipline & rides.",
+        description: "Home to extreme rides and scenic highland views.",
+        location: "Manolo Fortich",
+        images: [
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+        ]
+      },
+      {
+        id: "kitanglad",
+        title: "Mount Kitanglad",
+        short: "High peak.",
+        description: "One of the highest mountains in the Philippines.",
+        location: "Bukidnon",
+        images: [
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+        ]
+      },
+      {
+        id: "lakeapo",
+        title: "Lake Apo",
+        short: "Crater lake.",
+        description: "A calm crater lake perfect for kayaking and floating cottages.",
+        location: "Valencia City",
+        images: [
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+        ]
+      }
+    ]
+  },
+
+  "lanao-del-norte": {
+    title: "Lanao del Norte",
+    subtitle: "Land of waterfalls.",
+    spots: [
+      {
+        id: "mariacristina",
+        title: "Maria Cristina Falls",
+        short: "Twin waterfall.",
+        description: "A majestic twin waterfall known for its beauty and hydroelectric power.",
+        location: "Iligan City",
+        images: [
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+        ]
+      },
+      {
+        id: "lakelanao",
+        title: "Lake Lanao",
+        short: "Large highland lake.",
+        description: "The second largest lake in the Philippines.",
+        location: "Marawi City",
+        images: [
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+        ]
+      },
+      {
+        id: "tinago",
+        title: "Tinago Falls",
+        short: "Hidden waterfall.",
+        description: "A hidden paradise waterfall with turquoise waters.",
+        location: "Iligan City",
+        images: [
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+        ]
+      }
+    ]
+  }
+};
+
+
+/* --------------------------
+   SELECTORS
+---------------------------*/
+const homeView = document.getElementById("homeView");
+const provinceView = document.getElementById("provinceView");
+const detailView = document.getElementById("detailView");
+const aboutView = document.getElementById("aboutView");
+const contactView = document.getElementById("contactView");
+const backFromInner = document.getElementById("backFromInner");
+
+const provinceTitle = document.getElementById("selectedProvinceName");
+const provinceSubtitle = document.getElementById("selectedProvinceTagline");
+
+const spotsRow = document.getElementById("spotsRow");
+
+const detailTitle = document.getElementById("detailTitle");
+const detailDescription = document.getElementById("detailDescription");
+const detailLocation = document.getElementById("detailLocation");
+const detailProvinceBadge = document.getElementById("detailProvinceBadge");
+
+const mainImage = document.getElementById("mainImage");
+const bottomSpots = document.getElementById("bottomSpots");
+const backToProvince = document.getElementById("backToProvince");
+
+let currentProvince = null;
+let currentSpot = null;
+
+
+/* --------------------------
+   NAVIGATION
+---------------------------*/
+document.getElementById("navHome").onclick = showHome;
+document.getElementById("navAbout").onclick = showAbout;
+document.getElementById("navContact").onclick = showContact;
+
+let homeScrollPos = 0;
+
+function showHome(){
+  hideAll();
+  homeView.style.display = "block";
+  // restore scroll position
+  window.scrollTo(0, homeScrollPos);
+}
+
+// store scroll before leaving home
+function hideAll(){
+  if(homeView.style.display !== "none"){
+    homeScrollPos = window.scrollY;
+  }
+  homeView.style.display = "none";
+  provinceView.style.display = "none";
+  detailView.style.display = "none";
+  aboutView.style.display = "none";
+  contactView.style.display = "none";
+  backFromInner.style.display = "none";
+}
+
+
+function showAbout(){
+  hideAll();
+  aboutView.style.display = "block";
+}
+
+function showContact(){
+  hideAll();
+  contactView.style.display = "block";
+}
+
+
+/* --------------------------
+   PROVINCE CLICK
+---------------------------*/
+document.querySelectorAll(".province-card").forEach(card => {
+  card.onclick = () => openProvince(card.dataset.province);
+});
+
+/* --------------------------
+   OPEN PROVINCE
+---------------------------*/
+function openProvince(key){
+  const p = DATA[key];
+  currentProvince = key;
+
+  provinceTitle.textContent = p.title;
+  provinceSubtitle.textContent = p.subtitle;
+
+// Province Backgrounds
+const provinceBackgrounds = {
+  "zamboanga-del-norte": "Home.jpeg", 
+  "bukidnon": "Home.jpeg",
+  "lanao-del-norte": "Home.jpeg"
+};
+
+// Taglines
+const provinceTaglines = {
+  "zamboanga-del-norte": "Beaches, culture, and Dakak Resort",
+  "bukidnon": "Highlands, pine forests, and adventure",
+  "lanao-del-norte": "Known for its majestic waterfalls and rich culture"
+};
+
+// Set background
+document.getElementById("provinceView").style.backgroundImage =
+  `url('${provinceBackgrounds[key]}')`;
+
+// Insert text
+document.getElementById("selectedProvinceName").textContent = p.title;
+document.getElementById("selectedProvinceTagline").textContent = provinceTaglines[key];
+
+  spotsRow.innerHTML = "";
+  p.spots.forEach(s => {
+    const col = document.createElement("div");
+    col.className = "col-md-4";
+    col.innerHTML = `
+      <div class="spot-card p-2 shadow-sm" data-id="${s.id}">
+        <div style="height:230px; background-size:cover; background-image:url('${s.images[0]}'); border-radius:6px;"></div>
+        <h5 class="mt-2">${s.title}</h5>
+        <p class="small text-muted">${s.short}</p>
+      </div>
+    `;
+    col.onclick = () => openSpot(key, s.id);
+    spotsRow.appendChild(col);
+  });
+
+  hideAll();
+  provinceView.style.display = "block";
+  backFromInner.style.display = "block";
+}
+
+/* --------------------------
+   OPEN SPOT
+---------------------------*/
+function openSpot(provinceKey, spotId){
+  const province = DATA[provinceKey];
+  const spot = province.spots.find(s => s.id === spotId);
+
+  currentSpot = spotId;
+
+  detailProvinceBadge.textContent = province.title;
+  detailTitle.textContent = spot.title;
+  detailDescription.textContent = spot.description;
+  detailLocation.textContent = spot.location;
+
+  mainImage.style.backgroundImage = `url('${spot.images[0]}')`;
+
+  ["thumb0","thumb1","thumb2"].forEach((id,i)=>{
+    const img = document.getElementById(id);
+    img.src = spot.images[i];
+    img.onclick = () => mainImage.style.backgroundImage = `url('${spot.images[i]}')`;
+  });
+
+  bottomSpots.innerHTML = "";
+  province.spots.forEach(s=>{
+    const col = document.createElement("div");
+    col.className = "col-md-4";
+    col.innerHTML = `
+      <div class="p-2 border rounded" style="${s.id===spotId ? "background:#f0f0f0" : ""}">
+        <img src="${s.images[0]}" style="width:100%; height:100px; object-fit:cover;">
+        <p class="small mt-1 mb-0"><strong>${s.title}</strong></p>
+      </div>
+    `;
+    col.onclick = () => openSpot(provinceKey, s.id);
+    bottomSpots.appendChild(col);
+  });
+
+  hideAll();
+  detailView.style.display = "block";
+}
+
+/* --------------------------
+   BACK BUTTON FIX
+---------------------------*/
+backFromInner.onclick = () => {
+  if (detailView.style.display === "block") {
+    // Go back to province view without re-creating DOM
+    detailView.style.display = "none";
+    provinceView.style.display = "block";
+    return;
+  }
+
+  if (provinceView.style.display === "block") {
+    // Simply show home without touching the grid
+    provinceView.style.display = "none";
+    detailView.style.display = "none";
+    homeView.style.display = "block";
+    backFromInner.style.display = "none"; // hide back button
+    document.getElementById("homeProvinces").style.display = "flex"; // ensure grid is visible
+    return;
+  }
+};
+
+backToProvince.onclick = () => {
+  hideAll();
+  provinceView.style.display = "block";
+  backFromInner.style.display = "block";
+}
+
+
+
+
+// CONTACT FORM EMAILJS
+document.getElementById("sendMessageBtn").onclick = () => {
+  const name = document.getElementById("contactName").value;
+  const email = document.getElementById("contactEmail").value;
+  const message = document.getElementById("contactMessage").value;
+
+  if(!name || !email || !message){
+    alert("Please fill all fields before sending.");
+    return;
+  }
+
+  const templateParams = {
+    from_name: name,
+    from_email: email,
+    message: message
+  };
+
+  emailjs.send("service_c2o9ehy", "template_j0q4nsl", templateParams)
+    .then(function(response) {
+       alert("Message sent successfully! ✅");
+       // Clear form
+       document.getElementById("contactName").value = "";
+       document.getElementById("contactEmail").value = "";
+       document.getElementById("contactMessage").value = "";
+    }, function(error) {
+       alert("Oops! Something went wrong. ❌", error);
+    });
+};
+
+
+}; // END window.onload
+</script>
+
+</body>
+</html>
 
